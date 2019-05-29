@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>ajax无刷新分页</title>
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<script type="text/javascript" src="js/jquery-3.2.0.min.js" ></script>
+		<script type="text/javascript" src="js/popper.min.js" ></script>
+		<script type="text/javascript" src="js/bootstrap.min.js" ></script>
+		<script>
+			var page=1;//当前页
+			var pagesize=2;//每页显示的条数
+			
+			//获取总页数
+			function getcounts(){
+				var zys=0;//总页数
+				$.ajax({
+					type:"get",
+					url:"ajaxcounts.php",
+					async:false,//true异步提交 可两个进程同时执行  ,false同步提交  只允许一个进程执行，执行完后才能执行下一个
+					datatype:"text",
+					success:function(data){
+						//alert(data);
+						zys=Math.ceil(data/pagesize);
+					}
+				});
+				//alert(zys);
+				return zys;
+			}
+			var pages=getcounts();//总页数
+			
+			function loadlist(){
+				$.ajax({
+					type:"post",
+					url:"ajaxdata.php",
+					async:true,
+					data:{page:page,pagesize:pagesize},
+					datatype:"JSON",
+					success:function(data){
+						//alert(data);
+						var str="";
+						data=$.parseJSON(data);
+						for(var k in data){
+							//alert(data[k]["tname"]);
+							str+="<tr><td>"+data[k]["tid"]+"</td>";
+							str+="<td>"+data[k]["tname"]+"</td></tr>";
+						}
+						$("#tblist").html(str);
+					}
+				});
+			}
+		
+			function pagelist(){
+				var str="";
+				str+="<li class='page-item' id='pre'><a class='page-link'>上一页</a></li>";
+				for (var i=page-3;i<=page+3;i++) {
+					if(i>0 && i<=getcounts()){
+						if(i==page){
+							str+="<li class='page-item active'><a class='page-link'>"+i+"</a></li>"
+						}else{
+							str+="<li class='page-item nums'><a class='page-link'>"+i+"</a></li>"
+						}
+					}
+				}
+				str+="<li class='page-item' id='next'><a class='page-link'>下一页</a></li>"
+				//給页面绑定分页列表
+				$("#pagelist").html(str);
+				
+				$("#pre").click(function(){
+					if(page>1){
+						page--;
+						loadlist();
+						pagelist();
+					}
+				});
+				
+				$(".nums").click(function(){
+					var num=parseInt($(this).text());
+					page=num;
+					loadlist();
+					pagelist();
+				});
+				
+				$("#next").click(function(){
+					if(page<pages){
+						page++;
+						loadlist();
+						pagelist();
+					}
+				});
+			}
+			
+			$(document).ready(function(){
+				loadlist();
+				pagelist();
+			});
+		</script>
+	</head>
+	<body>
+		<from>
+			<input name="sea" />
+			<button>搜索</button>
+		</from>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>name</th>
+				</tr>				
+			</thead>
+			<tbody id="tblist">
+				
+			</tbody>
+		</table>
+			<ul class="nav pagination pagination-md col-md-3 container nav-pills" id="pagelist">
+			
+			</ul>
+	</body>
+</html>

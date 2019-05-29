@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet"  href="css/bootstrap.min.css"/>
+		<script type="text/javascript" src="js/jquery-3.2.0.min.js" ></script>
+		<script type="text/javascript" src="js/popper.min.js" ></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script>
+			function checklognform(){
+				if($("#uname").val()==""){
+					alert("用户名不能为空");
+					$("#uname").focus();
+					return false;
+				}
+				if($("#pwd").val()==""){
+					alert("密码不能为空");
+					$("#pwd").focus();
+					return false;
+				}
+				if($("#ucode").val()==""){
+					alert("验证码不能为空");
+					$("#ucode").focus();
+					return false;
+				}
+			}
+		</script>
+		<style>
+			form table tr{height: 45px;}
+		</style>
+	</head>
+	<body>
+		<header >
+			<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+			<img src="img/49.jpg" width="40" />
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link active">Logn</a></li>
+				<li class="nav-item"><a class="nav-link">active</a></li>
+				<li class="nav-item"><a class="nav-link">link</a></li>
+			</ul>
+		</nav>
+		</header>
+		<div class="breadcrumb">
+				<li class="breadcrumb-item"><a href="index.php" style="color:blue ;">首页</a></li>
+				<li class="breadcrumb-item"><a href="#" style="color:gray;">登录</a></li>
+				<li class="breadcrumb-item"><a href="register.html" style="color:blue ;">注册</a></li>
+				
+
+		</div>
+				<br />
+		<div class="col-md-4 container" style=" border-radius: 10px; height: 50%;" >
+			<form action="logn.php" method="post">
+			<table class="text-center" style=" line-height: 30px; width: 100%;" >
+				<th><h1>登录页面</h1></th>
+				<tr>
+					<td>用户名：<input type="text" name="uname" id="uname" placeholder="填写用户名..." style="border-radius: 5px;" />
+					</td>
+				</tr>
+				<tr>
+					<td>密&nbsp;&nbsp;&nbsp;&nbsp;码：<input type="password" name="pwd" id="pwd" placeholder="填写密码..." style="border-radius: 5px;" /></td>
+				</tr>
+				<tr>
+					<td>验证码：<input type="text" name="ucode" id="ucode" placeholder="填写验证码..." style="border-radius: 5px;" /><br />
+					<img src="cod1.php" height="35px" align="center"  onclick="this.src='cod1.php?nocache='+Math.random()" title="点击换一张" alt="点击换一张"/></td>
+				</tr>
+				<tr>
+					<td><input class="btn btn-info" type="submit" name="submit" onclick="return checklognform()" value="登录" style="width: 30%;" /></td>
+				</tr>
+			</table>
+			</form>
+		</div>
+		<br />
+		<footer class="jumbotron text-center" style="padding-top: 14px; padding-bottom: 10px;">
+			<span>版权所有&copy;鲲鹏九班</span>
+		</footer>
+	</body>
+</html>

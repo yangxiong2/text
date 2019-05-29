@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet"  href="css/bootstrap.min.css"/>
+		<script type="text/javascript" src="js/jquery-3.2.0.min.js" ></script>
+		<script type="text/javascript" src="js/popper.min.js" ></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script>
+			function checkname(uname){
+				$.ajax({
+					type:"post",
+					url:"checkname.php",
+					async:true,
+					data:{"uname":uname},
+					datatype:"text",
+					success:function(data){
+						if(data=="1"){
+							$("#unames").html("<font color='red'>此用户名已存在</font>");
+							$("#unames").focus();
+						}
+						else if(data=="0"){
+							$("#unames").html("<font color='green'>该用户名可用</font>");
+						}
+					},
+					error:function(xhr){
+						alert(xhr.status+xhr.statusText);
+					}
+				});
+			}
+			function checkform(){
+					if($("#uname").val()==""){
+						alert('用户名不能为空');
+					    $("#uname").focus();
+					    return false;
+					}
+					if($("#upwd").val()==""){
+						alert('密码不能为空');
+					    $("#upwd").focus();
+					    return false;
+					}
+					var reg=new RegExp(/^(?![^a-zA-Z]+$)(?!\D+$)/);
+					if(!reg.test($("#upwd").val())){
+						alert('密码格式不正确');
+					    $("#upwd").focus();
+					    return false;
+					}
+					
+					if ($("#upwd").val()!=$("#repwd").val()) {
+						alert('密码不一致');
+					    $("#repwd").focus();
+					    return false;
+					}
+					if($("#upwd").val()==""){
+						alert('密码不能为空');
+					    $("#upwd").focus();
+					    return false;
+					}
+					if($("#utel").val()==""){
+						alert('电话不能为空');
+					    $("#utel").focus();
+					    return false;
+					}
+					if($("#ufile").val()==""){
+						alert('图像不能为空');
+					    $("#ufile").focus();
+					    return false;
+					}
+					if($("#ucid").val()==""){
+						alert('身份证不能为空');
+					    $("#ucid").focus();
+					    return false;
+					}
+					if($("#uemail").val()==""){
+						alert('邮箱不能为空');
+					    $("#uemail").focus();
+					    return false;
+					}
+			}
+		</script>
+		<style>
+			form table tr{height: 45px;}
+		</style>
+	</head>
+	<body>
+		<header >
+			<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+			<img src="img/20160119130645353_400.jpg" width="40" />
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link">active</a></li>
+				<li class="nav-item"><a class="nav-link">link</a></li>
+			</ul>
+		</nav>
+		</header>
+		<div class="breadcrumb">
+				<li class="breadcrumb-item"><a href="index.php" style="color:blue ;">首页</a></li>
+				<li class="breadcrumb-item"><a href="logn.html" style="color:blue ;">登录</a></li>
+				<li class="breadcrumb-item"><a href="#" style="color:gray;">注册</a></li>
+		</div>
+				<br />
+		<div class="row">		
+			<div class="container-fluid">
+				<form action="register.php" method="post" enctype="multipart/form-data">
+					<table style="margin: auto;">
+						<tr>
+							<td class="text">名称:</td>
+							<td ><input type="text" name="uname" id="uname" onblur="checkname($(this).val())" /><span id="unames">(可包含a-z)</span></td>
+							<td rowspan="9"  style="border-left:1px black solid; text-align: center;">
+								<h2>注册协议</h2>
+					<textarea cols="48" rows="12">1.立即注册立即注册立即注册立即注册立即注册
+						
+2.立即注册立即注册立即注册立即注册立即注册
+
+3.立即注册立即注册立即注册立即注册立即注册
+
+4.立即注册立即注册立即注册立即注册立即注册
+
+5.立即注册立即注册立即注册立即注册立即注册
+
+6.立即注册立即注册立即注册立即注册立即注册
+					</textarea><br />
+					<input type="checkbox" />请先同意协议，否则你将无法授权登录网页
+				</td>
+						</tr>
+						<tr>
+							<td class="text">密码:</td>
+							<td ><input type="password" name="upwd" id="upwd" /><span>(至少包含6个字符)</span></td>
+						</tr>
+						<tr>
+							<td class="text" >确认密码:</td>
+							<td><input type="password"  name="upwd" id="repwd" /></td>
+						</tr>
+						<tr>
+							<td class="text" >性别:</td>
+							<td><input type="radio" value="1" checked="checked" name="usex"  />男
+								<input type="radio" value="2" name="usex"  />女</td>
+						</tr>
+						<tr>
+							<td class="text" >电话:</td>
+							<td ><input type="text"  name="utel" id="utel" /></td>
+						</tr>
+						<tr>
+							<td class="text" >图像:</td>
+							<td ><input type="file"  name="ufile" id="ufile" /></td>
+						</tr>
+						<tr>
+							<td class="text">身份证号:</td>
+							<td ><input type="text" name="ucid" id="ucid" /></td>
+						</tr>
+						<tr>
+							<td class="text">邮箱:</td>
+							<td ><input type="email" name="uemail" id="uemail" /></td>
+						</tr>
+						<tr>
+							<td></td>
+							<td><input class="btn btn-primary" type="submit" value="注册" name="submit" onclick="return checkform()" style="width: 30%;" />
+							<input class="btn btn-primary" type="reset" value="重置" style="width: 30%;" /></td>
+						</tr>
+					</table>
+				</form>
+			</div>	
+		</div>
+		<br />
+		<footer class="jumbotron text-center" style="padding-top: 14px; padding-bottom: 10px;">
+			<span>版权所有&copy;鲲鹏九班</span>
+		</footer>
+	</body>
+</html>
